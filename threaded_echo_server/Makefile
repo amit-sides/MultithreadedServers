@@ -1,0 +1,27 @@
+
+CC=gcc
+LD=gcc
+CFLAGS=
+LFLAGS=-pthread
+SOURCES=threaded_echo.c
+OBJECTS=$(SOURCES:.c=.o)
+
+TARGET=threaded_echo
+
+.PHONY: all clean rebuild
+
+all: $(TARGET)
+
+rebuild: clean all
+
+%.o: %.c %.h
+	$(CC) $(CFLAGS) -c $< -o $@
+
+%.o: %.c
+	$(CC) $(CFLAGS) -c $< -o $@
+
+$(TARGET): $(OBJECTS)
+	$(LD) $(LFLAGS) $? -o $@
+
+clean:
+	rm -rf $(TARGET) $(OBJECTS)
